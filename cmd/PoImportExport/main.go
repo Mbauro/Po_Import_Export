@@ -18,7 +18,8 @@ func main() {
 			log.Fatal(err)
 		}
 
-	} else {
+	} else if len(os.Args) > 2 {
+
 		fmt.Println("importer")
 	}
 }
