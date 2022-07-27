@@ -4,83 +4,39 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	fileUtils "github.com/Mbauro/Po_Import_Export/internal/file/util"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
 )
 
-func validateFileExtension(filePath string) error {
-	fileExtension := filepath.Ext(filePath)
-
-	if strings.Compare(fileExtension, ".po") != 0 {
-		return errors.New("wrong file extension. A '.po' extension must be provided")
-	}
-
-	return nil
-}
-
 func CreateCsvFromFile(filepath string) error {
-	err := validateFileExtension(filepath)
+	err := fileUtils.ValidateFileExtension(filepath, ".po")
 
 	if err != nil {
 		return err
 	}
 
-	fileStringContent, err := getStringContentFromFile(filepath)
+	fileStringContent, err := fileUtils.GetStringContentFromFile(filepath)
 
 	if err != nil {
 		return err
 	}
 
-	translationDataContent, err := getTranslationDataContent(fileStringContent)
+	translationDataContent, err := fileUtils.GetTranslationDataContent(fileStringContent)
 
 	if err != nil {
 		return err
 	}
 
-	cleanedContent := cleanTranslationContent(translationDataContent)
+	cleanedContent := fileUtils.CleanTranslationContent(translationDataContent)
 
 	csvData := getCsvData(cleanedContent)
 
 	createCsvFile(csvData)
 
 	return nil
-}
-
-func getStringContentFromFile(filePath string) (string, error) {
-	body, err := ioutil.ReadFile(filePath)
-
-	if err != nil {
-		return "", errors.New("file not found")
-	}
-
-	stringBody := string(body)
-
-	return stringBody, nil
-}
-
-func getTranslationDataContent(content string) (string, error) {
-	var translationData string
-
-	index := strings.Index(content, "#:")
-
-	if index < 0 {
-		return "", errors.New("cannot extract translation data from file")
-	}
-
-	translationData = content[index:]
-
-	return translationData, nil
-
-}
-
-func cleanTranslationContent(fileContent string) string {
-	fileContent = strings.ReplaceAll(fileContent, "\"", "")
-	fileContent = strings.ReplaceAll(fileContent, "\n", "")
-
-	return fileContent
 }
 
 func getCsvData(fileContent string) [][]string {
