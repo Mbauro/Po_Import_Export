@@ -4,13 +4,28 @@ import (
 	"encoding/csv"
 	"fmt"
 	fileUtils "github.com/Mbauro/Po_Import_Export/internal/file/util"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
 )
 
-func CreateCsvFromFile(filepath string) error {
+type Csv struct {
+}
+
+func (csv *Csv) exportFile(filepath string) error {
+	log.Println("Exporting csv file ...")
+	err := createCsvFromFile(filepath)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createCsvFromFile(filepath string) error {
 	err := fileUtils.ValidateFileExtension(filepath, ".po")
 
 	if err != nil {
