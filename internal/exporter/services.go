@@ -2,7 +2,6 @@ package exporter
 
 import (
 	"encoding/csv"
-	"errors"
 	"fmt"
 	fileUtils "github.com/Mbauro/Po_Import_Export/internal/file/util"
 	"os"
@@ -89,7 +88,7 @@ func createCsvFile(csvData [][]string) error {
 	err = w.WriteAll(csvData)
 
 	if err != nil {
-		return errors.New("cannot write content into CSV file")
+		return fmt.Errorf("cannot write content into CSV file \n%w", err)
 	}
 
 	return nil

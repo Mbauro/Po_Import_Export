@@ -22,7 +22,7 @@ func GetStringContentFromFile(filePath string) (string, error) {
 	body, err := ioutil.ReadFile(filePath)
 
 	if err != nil {
-		return "", errors.New("file not found")
+		return "", fmt.Errorf("file not found \n%w", err)
 	}
 
 	stringBody := string(body)
