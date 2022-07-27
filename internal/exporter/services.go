@@ -73,6 +73,12 @@ func createCsvFile(csvData [][]string) error {
 	currentTime := time.Now()
 	currentTimeString := currentTime.Format("20060102150405")
 
+	err := os.MkdirAll(filepath.Join("./", "exportedFiles"), 0755)
+
+	if err != nil {
+		return err
+	}
+
 	filename := fmt.Sprintf("PoExport%s.csv", currentTimeString)
 
 	csvFile, err := os.Create(filepath.Join("./exportedFiles", filename))

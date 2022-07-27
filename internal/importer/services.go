@@ -37,7 +37,11 @@ func ImportCsvFileToPo(csvFilePath string, poFilePath string) error {
 
 	newFileData := getNewFileDataToImport(dataMap, fileStringContent)
 
-	createPoFile(newFileData, poFileName)
+	err = createPoFile(newFileData, poFileName)
+
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -101,6 +105,12 @@ func getNewFileDataToImport(dataMap map[string]string, fileData string) string {
 }
 
 func createPoFile(fileData string, filename string) error {
+
+	err := os.MkdirAll(filepath.Join("./", "importedFiles"), 0755)
+
+	if err != nil {
+		return err
+	}
 
 	newFile, err := os.Create(filepath.Join("./importedFiles", filename))
 
