@@ -46,10 +46,6 @@ func CreateCsvFromFile(filepath string) error {
 
 	createCsvFile(csvData)
 
-	if err != nil {
-		return err
-	}
-
 	return nil
 }
 
