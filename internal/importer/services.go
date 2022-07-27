@@ -2,7 +2,6 @@ package importer
 
 import (
 	"encoding/csv"
-	"fmt"
 	fileUtils "github.com/Mbauro/Po_Import_Export/internal/file/util"
 	"os"
 	"path/filepath"
@@ -39,8 +38,6 @@ func ImportCsvFileToPo(csvFilePath string, poFilePath string) error {
 	newFileData := getNewFileDataToImport(dataMap, fileStringContent)
 
 	createPoFile(newFileData, poFileName)
-
-	fmt.Println(dataMap)
 
 	return nil
 }
