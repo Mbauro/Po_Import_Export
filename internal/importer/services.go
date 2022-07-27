@@ -105,7 +105,7 @@ func getNewFileDataToImport(dataMap map[string]string, fileData string) string {
 
 func createPoFile(fileData string, filename string) error {
 
-	newFile, err := os.Create(filepath.Join("../../importedFiles", filename))
+	newFile, err := os.Create(filepath.Join("./importedFiles", filename))
 
 	if err != nil {
 		return err

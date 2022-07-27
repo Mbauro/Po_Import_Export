@@ -34,7 +34,11 @@ func CreateCsvFromFile(filepath string) error {
 
 	csvData := getCsvData(cleanedContent)
 
-	createCsvFile(csvData)
+	err = createCsvFile(csvData)
+
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -72,11 +76,13 @@ func createCsvFile(csvData [][]string) error {
 
 	filename := fmt.Sprintf("PoExport%s.csv", currentTimeString)
 
-	csvFile, err := os.Create(filepath.Join("../../internal/exporter/exportedFiles", filename))
+	csvFile, err := os.Create(filepath.Join("./exportedFiles", filename))
 
 	if err != nil {
-		return errors.New("cannot create export csv file")
+		return fmt.Errorf("cannot create export csv file \n%w", err)
 	}
+
+	defer csvFile.Close()
 
 	w := csv.NewWriter(csvFile)
 
