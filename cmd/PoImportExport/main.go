@@ -12,6 +12,7 @@ func main() {
 	actionFlg := flag.String("action", "", "Action import/export")
 	importFilePath := flag.String("i", "", "Path of the file to import")
 	exportFilePath := flag.String("e", "", "Path of the file to export")
+	exportFileFormat := flag.String("format", "csv", "Export file format")
 
 	flag.Parse()
 
@@ -38,7 +39,16 @@ func main() {
 			log.Fatal("missing argument -e. Provide path of the file to export")
 		}
 
-		err := exporter.ExportPoFileToCsv(*exportFilePath)
+		exporterInstance := &exporter.Exporter{}
+		exporterInstance.SetExportFilePath(*exportFilePath)
+		fileFormat, err := exporter.GetFileFormat(*exportFileFormat)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		exporterInstance.SetFileFormat(fileFormat)
+		err = exporterInstance.ExportFile()
 
 		if err != nil {
 			log.Fatal(err)
