@@ -1,30 +1,51 @@
 package main
 
 import (
+	"flag"
 	"github.com/Mbauro/Po_Import_Export/internal/exporter"
 	"github.com/Mbauro/Po_Import_Export/internal/importer"
 	"log"
-	"os"
 )
 
 func main() {
-	if len(os.Args) == 2 {
 
-		filePath := os.Args[1]
-		err := exporter.ExportPoFileToCsv(filePath)
+	actionFlg := flag.String("action", "", "Action import/export")
+	importFilePath := flag.String("i", "", "Path of the file to import")
+	exportFilePath := flag.String("e", "", "Path of the file to export")
+
+	flag.Parse()
+
+	switch *actionFlg {
+
+	case "import":
+		if *exportFilePath == "" {
+			log.Fatal("missing argument -e. Provide path of the file to export")
+		}
+
+		if *importFilePath == "" {
+			log.Fatal("missing argument -i. Provide path of the file to import")
+		}
+
+		err := importer.ImportFileToPo(*importFilePath, *exportFilePath)
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-	} else if len(os.Args) > 2 {
-		importFilePath := os.Args[1]
-		poFilePath := os.Args[2]
+	case "export":
 
-		err := importer.ImportFileToPo(importFilePath, poFilePath)
+		if *exportFilePath == "" {
+			log.Fatal("missing argument -e. Provide path of the file to export")
+		}
+
+		err := exporter.ExportPoFileToCsv(*exportFilePath)
 
 		if err != nil {
 			log.Fatal(err)
 		}
+
+	default:
+		log.Fatal("no action provided")
+
 	}
 }
