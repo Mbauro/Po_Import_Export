@@ -2,6 +2,7 @@ package importer
 
 import (
 	"encoding/csv"
+	"errors"
 	fileUtils "github.com/Mbauro/Po_Import_Export/internal/file/util"
 	"os"
 	"path/filepath"
@@ -35,7 +36,11 @@ func ImportCsvFileToPo(csvFilePath string, poFilePath string) error {
 		return err
 	}
 
-	newFileData := getNewFileDataToImport(dataMap, fileStringContent)
+	newFileData, err := getNewFileDataToImport(dataMap, fileStringContent)
+
+	if err != nil {
+		return err
+	}
 
 	err = createPoFile(newFileData, poFileName)
 
@@ -76,8 +81,12 @@ func importFileToMap(importFilePath string) (map[string]string, error) {
 	return importDataMap, nil
 }
 
-func getNewFileDataToImport(dataMap map[string]string, fileData string) string {
+func getNewFileDataToImport(dataMap map[string]string, fileData string) (string, error) {
 	startTranslationDataIndex := strings.Index(fileData, "#:")
+
+	if startTranslationDataIndex == -1 {
+		return "", errors.New("No translation data found in the po file")
+	}
 	translationData := fileData[startTranslationDataIndex:]
 	splitData := strings.Split(translationData, "#:")
 
@@ -100,7 +109,7 @@ func getNewFileDataToImport(dataMap map[string]string, fileData string) string {
 	newTranslationData := strings.Join(splitData, "\n#:")
 	newFileData := fileData[:startTranslationDataIndex] + newTranslationData
 
-	return newFileData
+	return newFileData, nil
 
 }
 
