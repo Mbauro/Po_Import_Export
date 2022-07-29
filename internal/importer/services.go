@@ -69,10 +69,7 @@ func importFileToMap(importFilePath string) (map[string]string, error) {
 		return nil, err
 	}
 
-	for rowIndex, record := range rawData {
-		if rowIndex == 0 {
-			continue
-		}
+	for _, record := range rawData {
 
 		importDataMap[record[0]] = record[1]
 
