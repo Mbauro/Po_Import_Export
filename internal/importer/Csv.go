@@ -9,7 +9,10 @@ import (
 	"strings"
 )
 
-func ImportCsvFileToPo(csvFilePath string, poFilePath string) error {
+type Csv struct {
+}
+
+func (csv *Csv) importFile(csvFilePath string, poFilePath string) error {
 	err := fileUtils.ValidateFileExtension(csvFilePath, ".csv")
 
 	if err != nil {
