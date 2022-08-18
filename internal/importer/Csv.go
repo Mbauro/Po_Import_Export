@@ -107,6 +107,7 @@ func getNewFileDataToImport(dataMap map[string]string, fileData string) (string,
 	}
 
 	newTranslationData := strings.Join(splitData, "\n#:")
+	newTranslationData = strings.TrimLeft(newTranslationData, "\n")
 	newFileData := fileData[:startTranslationDataIndex] + newTranslationData
 
 	return newFileData, nil
