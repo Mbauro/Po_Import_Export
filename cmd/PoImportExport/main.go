@@ -43,6 +43,8 @@ func main() {
 			log.Fatal(err)
 		}
 
+		log.Println("Import procedure terminated!")
+
 	case "export":
 
 		if *exportFilePath == "" {
@@ -63,6 +65,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		log.Println("Export procedure terminated!")
 
 	default:
 		log.Fatal("no action provided")
