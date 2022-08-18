@@ -27,7 +27,17 @@ func main() {
 			log.Fatal("missing argument -i. Provide path of the file to import")
 		}
 
-		err := importer.ImportFileToPo(*importFilePath, *exportFilePath)
+		importerInstance := &importer.Importer{}
+		importerInstance.SetImportFilePath(*importFilePath)
+		importerInstance.SetPoFilepath(*exportFilePath)
+		fileFormat, err := importer.GetFileFormat(*exportFileFormat)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		importerInstance.SetFileFormat(fileFormat)
+		err = importerInstance.ImportFile()
 
 		if err != nil {
 			log.Fatal(err)
