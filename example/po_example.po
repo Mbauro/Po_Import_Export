@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: example\n"
+"POT-Creation-Date: 2022-07-29 11:50+0200\n"
+"PO-Revision-Date: 2022-07-29 11:50+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: _TP\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: src/user/login.php:42
+msgid "Insert a valid email address"
+msgstr "Inserisci un indirizzo email valido"
+
+#: src/order.php:42
+msgid "Select the quantity"
+msgstr ""
+
+#: src/errorPage.php:2
+msgid "404. Page not found"
+msgstr ""
